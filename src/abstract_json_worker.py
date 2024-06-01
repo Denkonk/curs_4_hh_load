@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 
-class abstract_json_worker(ABC):
+class Abstract_json_worker(ABC):
     @abstractmethod
     def add_vacancies(self, vacancies):
         pass
