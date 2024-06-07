@@ -26,6 +26,7 @@ class Vacancy:
         else:
             self.salary_to = self.salary['to']
 
+        #разделить на 2 разных метода
         if not self.requirement:
             self.requirement = ""
 
@@ -47,6 +48,28 @@ class Vacancy:
             vacancy = cls(title, city, salary, requirement, responsibility, schedule, url, created_at)
             instances.append(vacancy)
         return instances
+
+    def to_json(self):
+        return {
+            "title": self.title,
+            "city": self.city,
+            "salary_from": self.salary_from,
+            "salary_to": self.salary_to,
+            "requirement": self.requirement,
+            "responsibility": self.responsibility,
+            "schedule": self.schedule,
+            "url": self.url,
+            "created_at": self.created_at
+        }
+
+    def __lt__(self, other):
+        if isinstance(other, Vacancy):
+            return self.salary_from < other.salary_from
+
+
+    #Добавить метод сравнения магисеский метод_ с подчеркиванием LT
+
+
 
 
 
