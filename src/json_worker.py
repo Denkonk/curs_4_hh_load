@@ -14,7 +14,8 @@ class Json_worker(Abstract_json_worker):
                 json.dump([], file)
 
     def add_vacancies(self, vacancies):
-        pass
+        with open(self.file_path, 'w', encoding='utf-8') as file:
+            json.dump(vacancies, file, ensure_ascii = False)
 
     def get_vacancies(self, keyword):
         pass
