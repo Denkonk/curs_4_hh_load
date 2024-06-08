@@ -1,7 +1,10 @@
-from src.abstract_hh_api import Abstract_hh_API
+from src.abstract_hh_api import AbstractHHAPI
 import requests
 
-class HH_API(Abstract_hh_API):
+class HHAPI(AbstractHHAPI):
+    """
+    Использует API HH.ru для получения списка вакансий, соответствующих заданному запросу
+    """
     def __init__(self):
         self.url = "https://api.hh.ru/vacancies/"
         self.params = {
@@ -13,9 +16,23 @@ class HH_API(Abstract_hh_API):
         }
 
     def get_vacancies(self, keyword, count):
+        '''
+        Получает список вакансий с API HH.ru
+        '''
         self.params.update({'text': keyword})
-        response = requests.get(self.url, params=self.params)
-        return response.json()['items']
+        vacancies = []
+        pages = count // self.params['per_page'] + (1 if count % self.params['per_page'] else 0)
+
+        for page in range(pages):
+            self.params['page'] = page
+            response = requests.get(self.url, params=self.params)
+            data = response.json()
+            vacancies.extend(data['items'])
+
+            if len(vacancies) >= count:
+                break
+
+        return vacancies[:count]
 
 # if __name__ == '__main__':
 #     my_api = HH_API()

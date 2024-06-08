@@ -1,5 +1,8 @@
 
 class Vacancy:
+    '''
+    Класс представления вакансии
+    '''
     def __init__(self, title, city, salary, requirement, responsibility, schedule, url, created_at):
         self.title = title
         self.city = city
@@ -12,6 +15,9 @@ class Vacancy:
         self.validate()
 
     def validate(self):
+        '''
+        Проверка на отсутствие зарплаты и отсутствие описании и требований к вакансии
+        '''
         if not self.salary:
             self.salary_from = 0
             self.salary_to = 0
@@ -35,6 +41,9 @@ class Vacancy:
 
     @classmethod
     def create_vacansies(cls, vacancies_data):
+        """
+        Создание объектов вакансий согласно необходимых параметров
+        """
         instances = []
         for vac_info in vacancies_data:
             title = vac_info['name']
@@ -50,6 +59,9 @@ class Vacancy:
         return instances
 
     def to_json(self):
+        """
+        Преобразование объектов вакансий в список словарей вакансий
+        """
         return {
             "title": self.title,
             "city": self.city,
@@ -63,11 +75,11 @@ class Vacancy:
         }
 
     def __lt__(self, other):
+        """
+        Метод для сортировки вакансий по заработной плате
+        """
         if isinstance(other, Vacancy):
             return self.salary_from < other.salary_from
-
-
-    #Добавить метод сравнения магисеский метод_ с подчеркиванием LT
 
 
 
